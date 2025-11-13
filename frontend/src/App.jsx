@@ -1,24 +1,27 @@
-import React, { useState } from 'react'
-import Lobby from './Lobby'
-import Game from './Game'
+import React, { useState, useEffect } from "react";
+import Lobby from "./Lobby";
+import Game from "./Game";
 
 function App({ socket }) {
-  const [inRoom, setInRoom] = useState(false)
+  const [inRoom, setInRoom] = useState(false);
+  const [players, setPlayers] = useState([]);
 
-  const handleJoin = () => setInRoom(true)
+  // Listen for server updates
+  useEffect(() => {
+    socket.on("updatePlayers", (playersList) => {
+      setPlayers(playersList);
+      setInRoom(true); // ✅ Once players are updated, switch to game view
+    });
+
+    // cleanup
+    return () => socket.off("updatePlayers");
+  }, [socket]);
 
   if (!inRoom) {
-    return <Lobby socket={socket} onJoin={handleJoin} />
+    return <Lobby socket={socket} onJoin={() => setInRoom(true)} />;
   }
 
-  return (
-    <div className="p-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold mb-4">UNO Game</h1>
-      </div>
-      <Game socket={socket} />
-    </div>
-  )
+  return <Game socket={socket} players={players} />;
 }
 
-export default App
+export default App;

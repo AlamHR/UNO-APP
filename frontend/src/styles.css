@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root{
+--card-width: 100px;
+--card-height: 140px;
+}
+
+
+.card {
+width: var(--card-width);
+height: var(--card-height);
+border-radius: 8px;
+box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: 700;
+}

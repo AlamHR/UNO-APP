@@ -1,0 +1,15 @@
+{
+"name": "uno-server",
+"version": "1.0.0",
+"private": true,
+"dependencies": {
+"express": "4.x",
+"http": "0.0.1-security",
+"socket.io": "4.x",
+"cors": "2.x",
+"uuid": "9.x"
+},
+"scripts": {
+"start": "node index.js"
+}
+}
